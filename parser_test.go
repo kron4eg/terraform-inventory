@@ -407,6 +407,34 @@ const exampleStateFile = `
 							"tags.Role": "worker"
 						}
 					}
+				},
+				"hcloud_server.eightteen": {
+					"type": "hcloud_server",
+					"depends_on": [],
+					"primary": {
+						"id": "42",
+						"attributes": {
+							"backup_window": "",
+							"backups": "false",
+							"datacenter": "fsn1-dc14",
+							"id": "42",
+							"image": "1",
+							"ipv4_address": "10.0.0.18",
+							"keep_disk": "false",
+							"labels.%": "1",
+							"labels.testlabel": "hcloud_test",
+							"location": "fsn1",
+							"name": "seventeen",
+							"server_type": "cx11",
+							"ssh_keys.#": "1",
+							"ssh_keys.0": "1337",
+							"status": "running"
+						},
+						"meta": {},
+						"tainted": false
+					},
+					"deposed": [],
+					"provider": "provider.hcloud"
 				}
 			}
 		}
@@ -423,6 +451,7 @@ const expectedListOutput = `
 			"10.0.0.11",
 			"10.0.0.13",
 			"10.0.0.16",
+			"10.0.0.18",
 			"10.0.0.7",
 			"10.0.0.8",
 			"10.0.0.9",
@@ -461,6 +490,7 @@ const expectedListOutput = `
 	"fourteen": ["192.168.102.14"],
 	"sixteen": ["10.0.0.16"],
 	"seventeen": ["50.0.0.17"],
+	"eightteen": ["10.0.0.18"],
 
 	"one.0":   ["10.0.0.1"],
 	"dup.0":   ["10.0.0.1"],
@@ -480,6 +510,7 @@ const expectedListOutput = `
 	"fourteen.0": ["192.168.102.14"],
 	"sixteen.0": ["10.0.0.16"],
 	"seventeen.0": ["50.0.0.17"],
+	"eightteen.0": ["10.0.0.18"],
 
 	"type_aws_instance":                  ["10.0.0.1", "10.0.1.1", "50.0.0.1"],
 	"type_digitalocean_droplet":          ["192.168.0.3"],
@@ -487,6 +518,7 @@ const expectedListOutput = `
 	"type_vsphere_virtual_machine":       ["10.20.30.40", "10.20.30.50"],
 	"type_openstack_compute_instance_v2": ["10.120.0.226"],
 	"type_profitbricks_server":           ["10.0.0.16"],
+	"type_hcloud_server":                 ["10.0.0.18"],
 	"type_softlayer_virtual_guest":       ["10.0.0.7"],
 	"type_exoscale_compute":              ["10.0.0.9"],
 	"type_google_compute_instance":       ["10.0.0.8"],
@@ -503,6 +535,7 @@ const expectedListOutput = `
 	"webserver": ["192.168.0.3"],
 	"staging": ["192.168.0.3"],
 	"status_superserver": ["10.120.0.226"],
+	"testlabel_hcloud_test": ["10.0.0.18"],
 	"database": ["10.0.0.8"],
 	"scw_test": ["10.0.0.11"]
 }
@@ -514,6 +547,7 @@ const expectedInventoryOutput = `[all]
 10.0.0.11
 10.0.0.13
 10.0.0.16
+10.0.0.18
 10.0.0.7
 10.0.0.8
 10.0.0.9
@@ -547,6 +581,12 @@ olddatacenter="\u003c0.7_format"
 
 [eight.0]
 10.0.0.8
+
+[eightteen]
+10.0.0.18
+
+[eightteen.0]
+10.0.0.18
 
 [eleven]
 10.0.0.11
@@ -642,6 +682,9 @@ olddatacenter="\u003c0.7_format"
 [testTag1]
 10.20.30.50
 
+[testlabel_hcloud_test]
+10.0.0.18
+
 [thirteen]
 10.0.0.13
 
@@ -685,6 +728,9 @@ olddatacenter="\u003c0.7_format"
 
 [type_google_compute_instance]
 10.0.0.8
+
+[type_hcloud_server]
+10.0.0.18
 
 [type_libvirt_domain]
 192.168.102.14
